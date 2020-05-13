@@ -1,6 +1,6 @@
 {
   "name": "@marvnet/hcaptcha-express",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "hcaptcha middleware for express (ALPHA)",
   "main": "./dist/index.js",
   "scripts": {
