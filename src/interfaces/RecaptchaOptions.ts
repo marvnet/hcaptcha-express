@@ -1,4 +1,4 @@
-export interface RecaptchaOptionsV2 {
+export interface HCaptchaOptionsV1 {
     onload?: string;
     checkremoteip?: boolean;
     render?: string;
@@ -9,11 +9,4 @@ export interface RecaptchaOptionsV2 {
     expired_callback?: string;
     size?: string;
     tabindex?: string;
-}
-export interface RecaptchaOptionsV3 {
-    onload?: string;
-    checkremoteip?: boolean;
-    hl?: string;
-    callback?: string;
-    action?:string;
 }

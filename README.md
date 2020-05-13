@@ -1,13 +1,13 @@
-# express-recaptcha
+# express-hcaptcha
 
-[![NPM](https://nodei.co/npm/express-recaptcha.png?compact=true)](https://nodei.co/npm/express-recaptcha/)
+[![NPM](https://nodei.co/npm/express-hcaptcha.png?compact=true)](https://nodei.co/npm/express-hcaptcha/)
 
 [![Build Status][ci-image]][ci-url]
 [![npm version][npm-version-image]][npm-version-url]
 
-[Google recaptcha][Google-recaptcha] middleware for express.
+[Google hcaptcha][Google-hcaptcha] middleware for express.
 
-[express-recaptcha v2][express-recaptcha-v2] (previous middleware version).
+[express-hcaptcha v2][express-hcaptcha-v2] (previous middleware version).
 
 ## Table of contents
 
@@ -16,16 +16,16 @@
 - [Usage](#usage)
   - [How to initialise](#how-to-initialise)
   - [`options` available/properties](#options-availableproperties)
-  - [Render - `recaptcha.middleware.render`](#render---recaptchamiddlewarerender)
-  - [Render and override options - `recaptcha.middleware.renderWith`](#render---recaptchamiddlewarerenderwith)
-  - [Verify - `recaptcha.middleware.verify`](#verify---recaptchamiddlewareverify)
+  - [Render - `hcaptcha.middleware.render`](#render---recaptchamiddlewarerender)
+  - [Render and override options - `hcaptcha.middleware.renderWith`](#render---recaptchamiddlewarerenderwith)
+  - [Verify - `hcaptcha.middleware.verify`](#verify---recaptchamiddlewareverify)
   - [List of possible error codes](#list-of-possible-error-codes)
 - [Examples](#examples)
 
 ## Installation
 
 ```shell
-npm install express-recaptcha --save
+npm install express-hcaptcha --save
 ```
 
 ## Requirements
@@ -42,12 +42,12 @@ npm install express-recaptcha --save
 ### How to initialise:
 
 ```javascript
-var Recaptcha = require('express-recaptcha').RecaptchaV3;
-//import Recaptcha from 'express-recaptcha'
-var recaptcha = new Recaptcha('SITE_KEY', 'SECRET_KEY');
+var HCaptcha = require('express-hcaptcha').RecaptchaV3;
+//import HCaptcha from 'express-hcaptcha'
+var hcaptcha = new HCaptcha('SITE_KEY', 'SECRET_KEY');
 //or with options
 var options = {'hl':'de'};
-var recaptcha = new Recaptcha('SITE_KEY', 'SECRET_KEY', options);
+var hcaptcha = new HCaptcha('SITE_KEY', 'SECRET_KEY', options);
 ```
 
 #### `options` available/properties:
@@ -55,38 +55,38 @@ var recaptcha = new Recaptcha('SITE_KEY', 'SECRET_KEY', options);
 |--------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------|
 | `onload`           | The callback function that gets called when all the dependencies have loaded.                                                                       |
 | `hl`               | Forces the widget to render in a specific language (Auto-detects if unspecified).                                                                   |
-| `callback`         | In that callback you will call your backend to verify the given token. To be verified, the token needs to be posted with the key **g-recaptcha-response**  (see the example folder) |
-| `action`           | **homepage** by default should only be alphanumeric [More info on google's web site](Google-recaptcha-action)                                       |
+| `callback`         | In that callback you will call your backend to verify the given token. To be verified, the token needs to be posted with the key **g-hcaptcha-response**  (see the example folder) |
+| `action`           | **homepage** by default should only be alphanumeric [More info on google's web site](Google-hcaptcha-action)                                       |
 | `checkremoteip`    | Adding support of remoteip verification (based on x-forwarded-for header or remoteAddress.Value could be **true** OR **false** (default **false**). |
 
 **For more information, please refer to:**
-- [reCaptcha - display](https://developers.google.com/recaptcha/docs/display#config)
-- [reCaptcha - verify ](https://developers.google.com/recaptcha/docs/verify)
+- [reCaptcha - display](https://developers.google.com/hcaptcha/docs/display#config)
+- [reCaptcha - verify ](https://developers.google.com/hcaptcha/docs/verify)
 
-### Render - `recaptcha.middleware.render`
-The middleware's render method sets the `recaptcha` property of `res` object, with the generated html code. Therefore, you can easily append recaptcha into your templates by passing `res.recaptcha` to the view:
+### Render - `hcaptcha.middleware.render`
+The middleware's render method sets the `hcaptcha` property of `res` object, with the generated html code. Therefore, you can easily append hcaptcha into your templates by passing `res.hcaptcha` to the view:
 
 ```javascript
-app.get('/', recaptcha.middleware.render, function(req, res){
-  res.render('login', { captcha:res.recaptcha });
+app.get('/', hcaptcha.middleware.render, function(req, res){
+  res.render('login', { captcha:res.hcaptcha });
 });
 ```
 
-### Render - `recaptcha.middleware.renderWith`
+### Render - `hcaptcha.middleware.renderWith`
 Same as the render middleware method except that you can override the options in parameter :
 ```javascript
-app.get('/', recaptcha.middleware.renderWith({'hl':'fr'}), function(req, res){
-  res.render('login', { captcha:res.recaptcha });
+app.get('/', hcaptcha.middleware.renderWith({'hl':'fr'}), function(req, res){
+  res.render('login', { captcha:res.hcaptcha });
 });
 ```
 
 
-### Verify - `recaptcha.middleware.verify`
-The middleware's verify method sets the `recaptcha` property of `req` object, with validation information:
+### Verify - `hcaptcha.middleware.verify`
+The middleware's verify method sets the `hcaptcha` property of `req` object, with validation information:
 
 ```javascript
-app.post('/', recaptcha.middleware.verify, function(req, res){
-  if (!req.recaptcha.error) {
+app.post('/', hcaptcha.middleware.verify, function(req, res){
+  if (!req.hcaptcha.error) {
     // success code
   } else {
     // error code
@@ -96,7 +96,7 @@ app.post('/', recaptcha.middleware.verify, function(req, res){
 
 The response verification is performed on `params`, `query`, and `body` properties for the `req` object.
 
-Here is an example of a `req.recaptcha` response:
+Here is an example of a `req.hcaptcha` response:
 
 #### Example of verification response:
 
@@ -123,18 +123,18 @@ Here is an example of a `req.recaptcha` response:
 
 ## Examples
 
-### express-recaptcha - with verification middleware:
+### express-hcaptcha - with verification middleware:
 
 ```javascript
 var express = require('express');
 var bodyParser = require('body-parser');
 var pub = __dirname + '/public';
 var app = express();
-var Recaptcha = require('express-recaptcha').RecaptchaV3;
+var HCaptcha = require('express-hcaptcha').RecaptchaV3;
 
-var recaptcha = new Recaptcha('SITE_KEY', 'SECRET_KEY',{callback:'cb'});
+var hcaptcha = new HCaptcha('SITE_KEY', 'SECRET_KEY',{callback:'cb'});
 
-//- required by express-recaptcha in order to get data from body or query.
+//- required by express-hcaptcha in order to get data from body or query.
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
 
@@ -142,17 +142,17 @@ app.use(express.static(pub));
 app.set('views', __dirname + '/views');
 app.set('view engine', 'jade');
 
-app.get('/', recaptcha.middleware.render, function(req, res){
-  res.render('login', { captcha:res.recaptcha });
+app.get('/', hcaptcha.middleware.render, function(req, res){
+  res.render('login', { captcha:res.hcaptcha });
 });
 
 // override default options for that route
-app.get('/fr', recaptcha.middleware.renderWith({'hl':'fr'}), function(req, res){
-  res.render('login', { captcha:res.recaptcha });
+app.get('/fr', hcaptcha.middleware.renderWith({'hl':'fr'}), function(req, res){
+  res.render('login', { captcha:res.hcaptcha });
 });
 
-app.post('/', recaptcha.middleware.verify, function(req, res){
-  if (!req.recaptcha.error) {
+app.post('/', hcaptcha.middleware.verify, function(req, res){
+  if (!req.hcaptcha.error) {
     // success code
   } else {
     // error code
@@ -160,18 +160,18 @@ app.post('/', recaptcha.middleware.verify, function(req, res){
 });
 ```
 
-### express-recaptcha - without verification middleware: (using `recaptcha.verify` callback instead)
+### express-hcaptcha - without verification middleware: (using `hcaptcha.verify` callback instead)
 
 ```javascript
 var express = require('express');
 var bodyParser = require('body-parser');
 var pub = __dirname + '/public';
 var app = express();
-var Recaptcha = require('express-recaptcha').RecaptchaV3;
+var HCaptcha = require('express-hcaptcha').RecaptchaV3;
 
-var recaptcha = new Recaptcha('SITE_KEY', 'SECRET_KEY', {callback:'cb'});
+var hcaptcha = new HCaptcha('SITE_KEY', 'SECRET_KEY', {callback:'cb'});
 
-//- required by express-recaptcha in order to get data from body or query.
+//- required by express-hcaptcha in order to get data from body or query.
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
 
@@ -180,17 +180,17 @@ app.set('views', __dirname + '/views');
 app.set('view engine', 'jade');
 
 app.get('/', function(req, res){
-  res.render('login', { captcha:recaptcha.render() });
+  res.render('login', { captcha:hcaptcha.render() });
 });
 
 // override default options for that route
 app.get('/fr', function(req, res){
-  res.render('login', { captcha:recaptcha.renderWith({'hl':'fr'}) });
+  res.render('login', { captcha:hcaptcha.renderWith({'hl':'fr'}) });
 });
 
 app.post('/', function(req, res){
-  recaptcha.verify(req, function(error, data){
-    if (!req.recaptcha.error) {
+  hcaptcha.verify(req, function(error, data){
+    if (!req.hcaptcha.error) {
       // success code
     } else {
       // error code
@@ -207,13 +207,13 @@ Run the example folder for a live demo:
 $ node example\server.js
 ```
 
-[ci-image]: https://travis-ci.org/pdupavillon/express-recaptcha.svg?branch=master
-[ci-url]: https://travis-ci.org/pdupavillon/express-recaptcha
-[npm-version-image]: https://badge.fury.io/js/express-recaptcha.svg
-[npm-version-url]: http://badge.fury.io/js/express-recaptcha
+[ci-image]: https://travis-ci.org/pdupavillon/express-hcaptcha.svg?branch=master
+[ci-url]: https://travis-ci.org/pdupavillon/express-hcaptcha
+[npm-version-image]: https://badge.fury.io/js/express-hcaptcha.svg
+[npm-version-url]: http://badge.fury.io/js/express-hcaptcha
 
 [expressjs]: https://github.com/expressjs/express
 [body-parser]: https://github.com/expressjs/body-parser
-[Google-recaptcha]:https://www.google.com/recaptcha
-[express-recaptcha-v2]:README.v2.md
-[Google-recaptcha-action]:https://developers.google.com/recaptcha/docs/v3#actions
+[Google-hcaptcha]:https://www.google.com/hcaptcha
+[express-hcaptcha-v2]:README.v2.md
+[Google-hcaptcha-action]:https://developers.google.com/hcaptcha/docs/v3#actions

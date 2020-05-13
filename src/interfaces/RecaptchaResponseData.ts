@@ -1,7 +1,3 @@
-export interface RecaptchaResponseDataV2 {
+export interface HCaptchaResponseDataV1 {
     hostname?: string
-}
-export interface RecaptchaResponseDataV3 extends RecaptchaResponseDataV2 {
-    score:number;
-    action:string;
 }

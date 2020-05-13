@@ -1,9 +1,8 @@
 {
-  "name": "express-recaptcha",
-  "version": "5.0.1",
-  "description": "Google recaptcha middleware for express",
+  "name": "express-hcaptcha",
+  "version": "0.0.1",
+  "description": "hcaptcha middleware for express (ALPHA)",
   "main": "./dist/index.js",
-  "types": "./dist/index.d.js",
   "scripts": {
     "test:watch": "mocha --watch --compilers ts:ts-node/register test/**/*.spec.ts",
     "test": "mocha --compilers ts:ts-node/register test/**/*.spec.ts",
@@ -14,23 +13,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/pdupavillon/express-recaptcha.git"
+    "url": "https://github.com/marvnet/hcaptcha-express.git"
   },
-  "keywords": [
-    "express",
-    "javascript",
-    "nodejs",
-    "recaptcha",
-    "google",
-    "captcha",
-    "jade"
-  ],
-  "author": "Paul du Pavillon",
+  "author": "MarvNet Digital UG (haftungsbeschraenkt)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/pdupavillon/express-recaptcha/issues"
+    "url": "https://github.com/marvnet/hcaptcha-express/issues"
   },
-  "homepage": "https://github.com/pdupavillon/express-recaptcha",
+  "homepage": "https://github.com/marvnet/hcaptcha-express",
   "devDependencies": {
     "@types/chai": "^4.1.7",
     "@types/express": "^4.16.0",

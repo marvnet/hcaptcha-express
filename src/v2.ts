@@ -1,20 +1,19 @@
-/// <reference path="./typings/express-recaptcha.ts" />
 import { NextFunction, Request, Response } from 'express';
 import * as https from 'https';
 
-import { RecaptchaMiddleware, RecaptchaOptionsV2, RecaptchaResponseDataV2, RecaptchaResponseV2 } from './interfaces';
+import { RecaptchaMiddleware, HCaptchaOptionsV1, HCaptchaResponseDataV1, HCaptchaResponseV1 } from './interfaces';
 
-export class RecaptchaV2 {
+export class HCaptchaV1 {
   private _api = {
-    host:'www.google.com',
-    script:'/recaptcha/api.js',
-    verify:'/recaptcha/api/siteverify'
+    host:'hcaptcha.com',
+    script:'/1/api.js',
+    verify:'/siteverify'
   };
   private _site_key:string;
   private _secret_key:string;
-  private _options:RecaptchaOptionsV2;
+  private _options:HCaptchaOptionsV1;
 
-  constructor(site_key:string, secret_key:string, options?:RecaptchaOptionsV2){
+  constructor(site_key:string, secret_key:string, options?:HCaptchaOptionsV1){
     this._site_key = site_key
     this._secret_key = secret_key
     this._options = options || {checkremoteip:false}
@@ -24,19 +23,19 @@ export class RecaptchaV2 {
   get middleware():RecaptchaMiddleware {
     return {
       render: (req:Request, res:Response, next:NextFunction) => {
-        res.recaptcha = this.render();
+        res.hcaptcha = this.render();
         next();
       },
-      renderWith: (optionsToOverride:RecaptchaOptionsV2) => {
+      renderWith: (optionsToOverride:HCaptchaOptionsV1) => {
         let self = this;
         return function(_req:Request, _res:Response, _next:NextFunction){
-          _res.recaptcha = self.renderWith(optionsToOverride);
+          _res.hcaptcha = self.renderWith(optionsToOverride);
           _next();
         };
       },
       verify: (req:Request, res:Response, next:NextFunction) => {
         this.verify(req, (error, data) => {
-          req.recaptcha = <RecaptchaResponseV2>{error, data}
+          req.hcaptcha = <HCaptchaResponseV1>{error, data}
           next();
         })
       }
@@ -45,7 +44,7 @@ export class RecaptchaV2 {
   render(){
     return this.renderWith({});
   }
-  renderWith(optionsToOverride:RecaptchaOptionsV2){
+  renderWith(optionsToOverride:HCaptchaOptionsV1){
     let query_string = ''
     let captcha_attr = ''
 
@@ -63,16 +62,16 @@ export class RecaptchaV2 {
   
     query_string = query_string.replace(/^&/,'?')
     return  '<script src="//'+this._api.host+this._api.script+query_string+'" async defer></script>'+
-            '<div class="g-recaptcha" data-sitekey="'+this._site_key+'"'+captcha_attr+'></div>'
+            '<div class="g-hcaptcha" data-sitekey="'+this._site_key+'"'+captcha_attr+'></div>'
   }
-  verify(req:Request, cb:(error?:string|null,data?:RecaptchaResponseDataV2|null)=>void){
+  verify(req:Request, cb:(error?:string|null,data?:HCaptchaResponseDataV1|null)=>void){
     let response = null;
     let post_options = null;
 
     if (!req) throw new Error('req is required');
-    if(req.body && req.body['g-recaptcha-response']) response = req.body['g-recaptcha-response'];
-    if(req.query && req.query['g-recaptcha-response']) response = req.query['g-recaptcha-response'];
-    if(req.params && (<any>req.params)['g-recaptcha-response']) response = (<any>req.params)['g-recaptcha-response'];
+    if(req.body && req.body['g-hcaptcha-response']) response = req.body['g-hcaptcha-response'];
+    if(req.query && req.query['g-hcaptcha-response']) response = req.query['g-hcaptcha-response'];
+    if(req.params && (<any>req.params)['g-hcaptcha-response']) response = (<any>req.params)['g-hcaptcha-response'];
   
     let query_string = 'secret='+this._secret_key+'&response='+response;
     if (this._options.checkremoteip){

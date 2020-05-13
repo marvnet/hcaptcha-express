@@ -1,11 +1,6 @@
-import { RecaptchaResponseDataV2, RecaptchaResponseDataV3 } from "./RecaptchaResponseData";
+import { HCaptchaResponseDataV1 } from "./RecaptchaResponseData";
 
-export interface RecaptchaResponseV2 {
+export interface HCaptchaResponseV1 {
     error?: string,
-    data?: RecaptchaResponseDataV2
-}
-
-export interface RecaptchaResponseV3 {
-    error?: string,
-    data?: RecaptchaResponseDataV3
+    data?: HCaptchaResponseDataV1
 }
