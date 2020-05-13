@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import * as https from 'https';
 
-import { RecaptchaMiddleware, HCaptchaOptionsV1, HCaptchaResponseDataV1, HCaptchaResponseV1 } from './interfaces';
+import { HCaptchaMiddleware, HCaptchaOptionsV1, HCaptchaResponseDataV1, HCaptchaResponseV1 } from './interfaces';
 
 export class HCaptchaV1 {
   private _api = {
@@ -20,7 +20,7 @@ export class HCaptchaV1 {
     if (!this._site_key) throw new Error('site_key is required')
     if (!this._secret_key) throw new Error('secret_key is required')
   }
-  get middleware():RecaptchaMiddleware {
+  get middleware():HCaptchaMiddleware {
     return {
       render: (req:Request, res:Response, next:NextFunction) => {
         res.hcaptcha = this.render();
