@@ -55,7 +55,7 @@ var hcaptcha = new HCaptcha('SITE_KEY', 'SECRET_KEY', options);
 |--------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------|
 | `onload`           | The callback function that gets called when all the dependencies have loaded.                                                                       |
 | `hl`               | Forces the widget to render in a specific language (Auto-detects if unspecified).                                                                   |
-| `callback`         | In that callback you will call your backend to verify the given token. To be verified, the token needs to be posted with the key **g-hcaptcha-response**  (see the example folder) |
+| `callback`         | In that callback you will call your backend to verify the given token. To be verified, the token needs to be posted with the key **h-captcha-response**  (see the example folder) |
 | `action`           | **homepage** by default should only be alphanumeric [More info on google's web site](Google-hcaptcha-action)                                       |
 | `checkremoteip`    | Adding support of remoteip verification (based on x-forwarded-for header or remoteAddress.Value could be **true** OR **false** (default **false**). |
 

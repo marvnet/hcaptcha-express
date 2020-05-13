@@ -62,16 +62,16 @@ export class HCaptchaV1 {
   
     query_string = query_string.replace(/^&/,'?')
     return  '<script src="//'+this._api.host+this._api.script+query_string+'" async defer></script>'+
-            '<div class="g-hcaptcha" data-sitekey="'+this._site_key+'"'+captcha_attr+'></div>'
+            '<div class="h-captcha" data-sitekey="'+this._site_key+'"'+captcha_attr+'></div>'
   }
   verify(req:Request, cb:(error?:string|null,data?:HCaptchaResponseDataV1|null)=>void){
     let response = null;
     let post_options = null;
 
     if (!req) throw new Error('req is required');
-    if(req.body && req.body['g-hcaptcha-response']) response = req.body['g-hcaptcha-response'];
-    if(req.query && req.query['g-hcaptcha-response']) response = req.query['g-hcaptcha-response'];
-    if(req.params && (<any>req.params)['g-hcaptcha-response']) response = (<any>req.params)['g-hcaptcha-response'];
+    if(req.body && req.body['h-captcha-response']) response = req.body['h-captcha-response'];
+    if(req.query && req.query['h-captcha-response']) response = req.query['h-captcha-response'];
+    if(req.params && (<any>req.params)['h-captcha-response']) response = (<any>req.params)['h-captcha-response'];
   
     let query_string = 'secret='+this._secret_key+'&response='+response;
     if (this._options.checkremoteip){
