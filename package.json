@@ -1,5 +1,5 @@
 {
-  "name": "@marvnet/express-hcaptcha",
+  "name": "@marvnet/hcaptcha-express",
   "version": "0.0.1",
   "description": "hcaptcha middleware for express (ALPHA)",
   "main": "./dist/index.js",
